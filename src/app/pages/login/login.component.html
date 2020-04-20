@@ -3,6 +3,8 @@
   <div class="card-body">
     <h5 class="card-title">El Blog de Matilda <i class="icon-hearts"></i></h5>
     <p class="card-text">Este es el Blog de Matilda! Aquí podrás ver cuándo va a nacer y también que cositas le tenemos para ella <i class="icon-strawberry"></i></p>
-    <button type="button" class="btn btn-info" (click)="login()"><i class="icon-email-2-at"></i> Entra con tu correo Gmail</button>
+    <app-error-handler [loading]="state.loading" [error]="state.error">
+      <button type="button" class="btn btn-info" (click)="login()"><i class="icon-email-2-at"></i> Entra con tu correo Gmail</button>
+    </app-error-handler>
   </div>
 </div>
