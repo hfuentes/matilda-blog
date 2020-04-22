@@ -1,5 +1,22 @@
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-info mb-3">
   <a class="navbar-brand" href="#">
-    <i class="icon-hearts"></i> El Blog de Matilda <i class="icon-hearts"></i>
+    El Blog de Matilda <i class="icon-hearts"></i>
   </a>
+  <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" *ngIf="auth.user$ | async as user">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarNavDropdown" *ngIf="auth.user$ | async as user">
+    <ul class="navbar-nav">
+      <li class="nav-item" ngbDropdown>
+        <button ngbDropdownToggle class="btn nav-link" id="navbarDropdownMenuLink" type="button">
+          Menú
+        </button>
+        <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuLink">
+          <button ngbDropdownItem (click)="auth.doLogout()">Cerrar sesión</button>
+          <button ngbDropdownItem routerLink='admin'>Ir al administrador</button>
+        </div>
+      </li>
+    </ul>
+  </div>
 </nav>
