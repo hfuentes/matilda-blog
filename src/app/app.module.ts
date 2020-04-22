@@ -8,6 +8,7 @@ import { AngularFireModule } from '@angular/fire'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard'
 import { AngularFirestoreModule } from '@angular/fire/firestore'
+import { AngularFireStorageModule } from '@angular/fire/storage'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -18,6 +19,7 @@ import { AdminComponent } from './pages/admin/admin.component'
 import { ErrorHandlerModule } from './components/error-handler/error-handler.module';
 import { PregnancyCalculatorComponent } from './components/pregnancy-calculator/pregnancy-calculator.component';
 import { ArchiveComponent } from './components/archive/archive.component'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -36,7 +38,10 @@ import { ArchiveComponent } from './components/archive/archive.component'
     ErrorHandlerModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     AngularFireAuthGuard
