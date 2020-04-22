@@ -27,7 +27,7 @@ export class Error {
   message: string
   type: ErrorType
   constructor(message?: string, type?: ErrorType) {
-    this.message = message || 'Oops! An error occurred, please try again.'
+    this.message = message || 'Oops! Ha ocurrido un error, por favor intenta nuevamente.'
     this.type = type || ErrorType.danger
   }
 }

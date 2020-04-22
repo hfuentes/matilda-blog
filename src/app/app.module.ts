@@ -15,7 +15,9 @@ import { LoginComponent } from './pages/login/login.component'
 import { NavbarComponent } from './components/navbar/navbar.component'
 import { HomeComponent } from './pages/home/home.component'
 import { AdminComponent } from './pages/admin/admin.component'
-import { ErrorHandlerModule } from './components/error-handler/error-handler.module'
+import { ErrorHandlerModule } from './components/error-handler/error-handler.module';
+import { PregnancyCalculatorComponent } from './components/pregnancy-calculator/pregnancy-calculator.component';
+import { ArchiveComponent } from './components/archive/archive.component'
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { ErrorHandlerModule } from './components/error-handler/error-handler.mod
     LoginComponent,
     NavbarComponent,
     HomeComponent,
-    AdminComponent
+    AdminComponent,
+    PregnancyCalculatorComponent,
+    ArchiveComponent
   ],
   imports: [
     BrowserModule,

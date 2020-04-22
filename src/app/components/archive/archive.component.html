@@ -1,0 +1,21 @@
+<div class="card">
+  <img src="assets/images/eco-archive.jpg" class="image-top card-img-top" alt="¿Cuándo llega Matilda?">
+  <div class="card-body">
+    <h5 class="card-title">El archivo de Matilda</h5>
+    <p class="card-text">Acá están todas las fotos de Matilda! y son muchas!</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item text-center text-white bg-info">
+      Semana 28
+    </li>
+    <li class="list-group-item text-center">
+      Fotos fotos
+    </li>
+  </ul>
+  <div class="card-body text-center" *ngIf="!state.upload.show">
+    <a href="#" class="card-link" (click)="state.upload.show = true">Subir una foto de matilda!</a>
+  </div>
+  <div class="card-body text-center" *ngIf="state.upload.show">
+    FORM
+  </div>
+</div>

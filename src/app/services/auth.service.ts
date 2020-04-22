@@ -56,7 +56,7 @@ export class AuthService {
 
   async updateUserData({ uid, email, photoURL, displayName }: User) {
     const userRef: AngularFirestoreDocument<User> = this.afStore.doc('users/' + uid)
-    return await userRef.update({
+    return await userRef.set({
       uid,
       email,
       photoURL,
