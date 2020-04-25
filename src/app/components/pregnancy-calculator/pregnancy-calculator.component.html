@@ -3,7 +3,8 @@
   <app-error-handler [loading]="state.loading" [error]="state.error">
     <div class="card-body">
       <h5 class="card-title">¿Cuándo llega Matilda?</h5>
-      <p class="card-text">Matilda esta en la <strong>semana {{ weeks | number:'1.0-0' }}</strong> y esperamos que llege en la siguiente fecha:
+      <p class="card-text">Matilda esta en la <strong>semana {{ weeks | number:'1.0-0' }}</strong> y esperamos que llege
+        en la siguiente fecha:
       </p>
     </div>
     <ul class="list-group list-group-flush">
@@ -13,8 +14,8 @@
         <strong>{{ percentage | percent }}</strong> ha avanzado el embarazo.
       </li>
     </ul>
-    <div class="card-body text-center">
-      <a href="#" class="card-link">Cambiar la fecha de última regla</a>
-    </div>
   </app-error-handler>
+  <div class="card-body text-center">
+    <a href="#" class="card-link">Cambiar la fecha de última regla</a>
+  </div>
 </div>
