@@ -12,10 +12,13 @@
         </li>
         <ng-container *ngFor="let image of item.images">
           <li class="list-group-item text-center">
-            <img [src]="image.url" alt="Matilda!" class="img-fluid rounded"
-              (click)="image.isCollapsed = !image.isCollapsed" [attr.aria-expanded]="!image.isCollapsed">
-            <br>
-            <button type="button" class="btn btn-danger mt-3" [ngbCollapse]="image.isCollapsed">¿Quitar?</button>
+            <app-error-handler [loading]="image.loading" [error]="image.error">
+              <img [src]="image.url" alt="Matilda!" class="img-fluid rounded"
+                (click)="image.isCollapsed = !image.isCollapsed" [attr.aria-expanded]="!image.isCollapsed">
+              <br>
+              <button type="button" class="btn btn-danger mt-3" [ngbCollapse]="image.isCollapsed"
+                (click)="removeImage(image, item)">¿Quitar?</button>
+            </app-error-handler>
           </li>
         </ng-container>
       </ng-container>

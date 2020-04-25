@@ -20,7 +20,9 @@ import { ErrorHandlerModule } from './components/error-handler/error-handler.mod
 import { PregnancyCalculatorComponent } from './components/pregnancy-calculator/pregnancy-calculator.component'
 import { ArchiveComponent } from './components/archive/archive.component'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import {  RxReactiveFormsModule } from '@rxweb/reactive-form-validators'
+import {  RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component'
+import { ConfirmationDialogService } from './services/confirmation-dialog.service'
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import {  RxReactiveFormsModule } from '@rxweb/reactive-form-validators'
     HomeComponent,
     AdminComponent,
     PregnancyCalculatorComponent,
-    ArchiveComponent
+    ArchiveComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,8 +49,10 @@ import {  RxReactiveFormsModule } from '@rxweb/reactive-form-validators'
     RxReactiveFormsModule
   ],
   providers: [
-    AngularFireAuthGuard
+    AngularFireAuthGuard,
+    ConfirmationDialogService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ConfirmationDialogComponent]
 })
 export class AppModule { }

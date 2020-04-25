@@ -4,6 +4,8 @@ import { AngularFireStorage } from '@angular/fire/storage'
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { RxwebValidators } from '@rxweb/reactive-form-validators'
 import * as uuid from 'uuid'
+import { ConfirmationDialogService } from 'src/app/services/confirmation-dialog.service'
+import { splitAtColon } from '@angular/compiler/src/util'
 
 @Component({
   selector: 'app-archive',
@@ -28,7 +30,10 @@ export class ArchiveComponent implements OnInit {
         week: number,
         images: Array<{
           url: string,
-          isCollapsed: boolean
+          isCollapsed: boolean,
+          path: string,
+          loading: boolean,
+          error: Error
         }>
       }>
     }
@@ -50,7 +55,8 @@ export class ArchiveComponent implements OnInit {
 
   constructor(
     private storage: AngularFireStorage,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private confirmService: ConfirmationDialogService
   ) { }
 
   ngOnInit() {
@@ -80,11 +86,19 @@ export class ArchiveComponent implements OnInit {
       this.state.upload.loading = true
       this.state.upload.error = null
       this.state.upload.success = false
-      const ref = this.storage.ref('ecos/' + this.getStrWeekDir() + '/' + this.getImageFileName())
-      ref.put(this.state.upload.form.value.image[0]).then(data => {
+      const path = 'ecos/' + this.getStrWeekDir() + '/' + this.getImageFileName()
+      const ref = this.storage.ref(path)
+      ref.put(this.state.upload.form.value.image[0]).then(() => {
+        // get url to add image on forlder array
+        return ref.getDownloadURL().toPromise()
+      }).then(url => {
+        const week = this.state.upload.form.value.week
+        const item = this.state.images.folder.find(x => x.week == week)
+        const image = { url, path, isCollapsed: true, loading: false, error: null }
+        item ? item.images.push(image) : this.state.images.folder.push({ week, images: [image] })
+        this.uploadCancel()
         this.state.upload.loading = false
         this.state.upload.success = true
-        console.log(data)
       }).catch(err => {
         this.state.upload.loading = false
         this.state.upload.error = new Error()
@@ -116,7 +130,11 @@ export class ArchiveComponent implements OnInit {
         for (let i = 0; i < images.items.length; i++) {
           const imageItem = images.items[i];
           const imageUrl = await imageItem.getDownloadURL()
-          imageUrlList.push({ url: imageUrl, isCollapsed: true })
+          imageUrlList.push({
+            url: imageUrl,
+            isCollapsed: true,
+            path: imageItem.fullPath
+          })
         }
         this.state.images.folder.push({
           week: parseInt(folderRef.name),
@@ -129,6 +147,32 @@ export class ArchiveComponent implements OnInit {
       this.state.images.error = new Error()
       console.error(err)
     }
+  }
+
+  removeImageFile(image, item) {
+    image.loading = true
+    image.error = null
+    this.storage.ref(image.path).delete().toPromise().then(() => {
+      const folderIndex = this.state.images.folder.indexOf(item)
+      const imageIndex = this.state.images.folder[folderIndex].images.indexOf(image)
+      this.state.images.folder[folderIndex].images.splice(imageIndex, 1)
+      if (this.state.images.folder[folderIndex].images.length == 0) this.state.images.folder.splice(folderIndex, 1)
+      image.loading = false
+    }).catch(err => {
+      image.error = new Error()
+      image.loading = false
+      console.error(err)
+    })
+  }
+
+  removeImage(image, item) {
+    this.confirmService.confirm('Oops!', '¿Estás seguro de eliminar esta foto de Matilda?').then(confirmed => {
+      image.isCollapsed = true
+      if (!confirmed) return
+      this.removeImageFile(image, item)
+    }).catch(() => {
+      image.isCollapsed = true
+    })
   }
 
 }
