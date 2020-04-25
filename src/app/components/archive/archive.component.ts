@@ -83,7 +83,8 @@ export class ArchiveComponent implements OnInit {
     this.state.upload.show = false
     this.state.upload.form.controls.week.reset()
     this.state.upload.form.controls.image.reset()
-    this.state.upload.form.controls.imageCrop.reset()
+    this.state.upload.form.controls.imageCrop.setValue('')
+    this.state.upload.event = ''
   }
 
   onSubmitUpload() {

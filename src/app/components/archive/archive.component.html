@@ -48,7 +48,7 @@
           <image-cropper [imageChangedEvent]="state.upload.event" [maintainAspectRatio]="false" [resizeToWidth]="512"
             format="png" (imageCropped)="imageCropped($event)"></image-cropper>
         </div>
-        <div class="text-center mb-3 mt-3">
+        <div class="text-center mb-3 mt-3" *ngIf="state.upload.form.controls.imageCrop.value">
           <img [src]="state.upload.form.controls.imageCrop.value" class="img-fluid rounded" />
         </div>
         <button type="submit" class="btn btn-primary mr-3" [disabled]="state.upload.form.invalid">Guardar</button>
