@@ -87,6 +87,13 @@ export class ArchiveComponent implements OnInit {
     this.state.upload.event = ''
   }
 
+  uploadCancelBtn() {
+    this.confirmService.confirm('Oops!', '¿Estás seguro de cancelar?', 'Cancelar', 'Volver').then(confirmed => {
+      console.log(confirmed)
+      if (confirmed) this.uploadCancel()
+    })
+  }
+
   onSubmitUpload() {
     if (this.state.upload.form.valid) {
       this.state.upload.loading = true
@@ -148,6 +155,7 @@ export class ArchiveComponent implements OnInit {
           images: imageUrlList
         })
       }
+      this.state.images.folder.sort((a, b) => (a.week < b.week) ? 1 : -1)
       this.state.images.loading = false
     } catch (err) {
       this.state.images.loading = false
