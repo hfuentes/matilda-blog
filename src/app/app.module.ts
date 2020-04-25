@@ -16,10 +16,11 @@ import { LoginComponent } from './pages/login/login.component'
 import { NavbarComponent } from './components/navbar/navbar.component'
 import { HomeComponent } from './pages/home/home.component'
 import { AdminComponent } from './pages/admin/admin.component'
-import { ErrorHandlerModule } from './components/error-handler/error-handler.module';
-import { PregnancyCalculatorComponent } from './components/pregnancy-calculator/pregnancy-calculator.component';
+import { ErrorHandlerModule } from './components/error-handler/error-handler.module'
+import { PregnancyCalculatorComponent } from './components/pregnancy-calculator/pregnancy-calculator.component'
 import { ArchiveComponent } from './components/archive/archive.component'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import {  RxReactiveFormsModule } from '@rxweb/reactive-form-validators'
 
 @NgModule({
   declarations: [
@@ -40,8 +41,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    FormsModule,
     ReactiveFormsModule,
-    FormsModule
+    RxReactiveFormsModule
   ],
   providers: [
     AngularFireAuthGuard
