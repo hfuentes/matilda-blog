@@ -40,8 +40,16 @@
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Foto</label>
           <div class="col-sm-6">
-            <input [writeFile]="true" type="file" class="form-control-file" formControlName="image" />
+            <input [writeFile]="true" type="file" class="form-control-file" formControlName="image"
+              (change)="state.upload.event = $event" accept="image/jpeg, image/png" />
           </div>
+        </div>
+        <div class="text-center">
+          <image-cropper [imageChangedEvent]="state.upload.event" [maintainAspectRatio]="false" [resizeToWidth]="512"
+            format="png" (imageCropped)="imageCropped($event)"></image-cropper>
+        </div>
+        <div class="text-center mb-3 mt-3">
+          <img [src]="state.upload.form.controls.imageCrop.value" class="img-fluid rounded" />
         </div>
         <button type="submit" class="btn btn-primary mr-3" [disabled]="state.upload.form.invalid">Guardar</button>
         <button type="button" class="btn btn-secondary" (click)="uploadCancel()">Cancelar</button>

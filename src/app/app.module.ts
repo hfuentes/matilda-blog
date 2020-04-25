@@ -23,6 +23,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import {  RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component'
 import { ConfirmationDialogService } from './services/confirmation-dialog.service'
+import { ImageCropperModule } from 'ngx-image-cropper'
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ConfirmationDialogService } from './services/confirmation-dialog.servic
     AngularFireStorageModule,
     FormsModule,
     ReactiveFormsModule,
-    RxReactiveFormsModule
+    RxReactiveFormsModule,
+    ImageCropperModule
   ],
   providers: [
     AngularFireAuthGuard,

@@ -6,6 +6,7 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators'
 import * as uuid from 'uuid'
 import { ConfirmationDialogService } from 'src/app/services/confirmation-dialog.service'
 import { splitAtColon } from '@angular/compiler/src/util'
+import { ImageCroppedEvent } from 'ngx-image-cropper'
 
 @Component({
   selector: 'app-archive',
@@ -21,7 +22,8 @@ export class ArchiveComponent implements OnInit {
       error: Error
       success: boolean
       form: FormGroup
-      allowedExtensions: Array<string>
+      allowedExtensions: Array<string>,
+      event: any
     },
     images: {
       loading: boolean,
@@ -44,7 +46,8 @@ export class ArchiveComponent implements OnInit {
         error: null,
         success: false,
         form: new FormGroup({}),
-        allowedExtensions: ['jpg', 'png', 'jpeg']
+        allowedExtensions: ['jpg', 'png', 'jpeg'],
+        event: ''
       },
       images: {
         loading: false,
@@ -70,7 +73,8 @@ export class ArchiveComponent implements OnInit {
         Validators.required,
         RxwebValidators.image({ maxHeight: 5000, maxWidth: 5000 }),
         RxwebValidators.extension({ extensions: this.state.upload.allowedExtensions })
-      ])
+      ]),
+      imageCrop: new FormControl('', [Validators.required])
     })
     this.getEcosFolder()
   }
@@ -88,7 +92,8 @@ export class ArchiveComponent implements OnInit {
       this.state.upload.success = false
       const path = 'ecos/' + this.getStrWeekDir() + '/' + this.getImageFileName()
       const ref = this.storage.ref(path)
-      ref.put(this.state.upload.form.value.image[0]).then(() => {
+      // upload from base64 image crop
+      ref.putString(this.state.upload.form.value.imageCrop, 'data_url').then(() => {
         // get url to add image on forlder array
         return ref.getDownloadURL().toPromise()
       }).then(url => {
@@ -113,8 +118,8 @@ export class ArchiveComponent implements OnInit {
   }
 
   private getImageFileName(): string {
-    var s = this.state.upload.form.value.image[0].name.split('.')
-    return uuid.v4() + '.' + s[s.length - 1]
+    //var s = this.state.upload.form.value.image[0].name.split('.')
+    return uuid.v4() + '.png'// + s[s.length - 1]
   }
 
   async getEcosFolder() {
@@ -173,6 +178,10 @@ export class ArchiveComponent implements OnInit {
     }).catch(() => {
       image.isCollapsed = true
     })
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.state.upload.form.controls.imageCrop.setValue(event.base64)
   }
 
 }
