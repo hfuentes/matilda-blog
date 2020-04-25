@@ -4,29 +4,9 @@
     <h5 class="card-title">El archivo de Matilda</h5>
     <p class="card-text">Acá están todas las fotos de Matilda! y son muchas!</p>
   </div>
-  <ul class="list-group list-group-flush">
-    <app-error-handler [loading]="state.images.loading" [error]="state.images.error">
-      <ng-container *ngFor="let item of state.images.folder">
-        <li class="list-group-item text-center text-white bg-info">
-          Semana {{ item.week }}
-        </li>
-        <ng-container *ngFor="let image of item.images">
-          <li class="list-group-item text-center">
-            <app-error-handler [loading]="image.loading" [error]="image.error">
-              <img [src]="image.url" alt="Matilda!" class="img-fluid rounded"
-                (click)="image.isCollapsed = !image.isCollapsed" [attr.aria-expanded]="!image.isCollapsed">
-              <br>
-              <button type="button" class="btn btn-danger mt-3" [ngbCollapse]="image.isCollapsed"
-                (click)="removeImage(image, item)">¿Quitar?</button>
-            </app-error-handler>
-          </li>
-        </ng-container>
-      </ng-container>
-    </app-error-handler>
-  </ul>
   <div class="card-body text-center" *ngIf="!state.upload.show">
-    <button type="button" class="btn btn-link card-link" (click)="state.upload.show = true">Subir una foto de
-      matilda!</button>
+    <button type="button" class="btn btn-link card-link" (click)="state.upload.show = true">Agregar una foto de
+      Matilda!</button>
   </div>
   <div class="card-body text-center" *ngIf="state.upload.show">
     <app-error-handler [loading]="state.upload.loading" [error]="state.upload.error">
@@ -52,9 +32,28 @@
           <img [src]="state.upload.form.controls.imageCrop.value" class="img-fluid rounded" />
         </div>
         <button type="submit" class="btn btn-primary mr-3" [disabled]="state.upload.form.invalid">Guardar</button>
-        <button type="button" class="btn btn-secondary" (click)="uploadCancel()">Cancelar</button>
+        <button type="button" class="btn btn-secondary" (click)="uploadCancelBtn()">Cancelar</button>
       </form>
     </app-error-handler>
-
   </div>
+  <ul class="list-group list-group-flush">
+    <app-error-handler [loading]="state.images.loading" [error]="state.images.error">
+      <ng-container *ngFor="let item of state.images.folder">
+        <li class="list-group-item text-center text-white bg-info">
+          Semana {{ item.week }}
+        </li>
+        <ng-container *ngFor="let image of item.images">
+          <li class="list-group-item text-center">
+            <app-error-handler [loading]="image.loading" [error]="image.error">
+              <img [src]="image.url" alt="Matilda!" class="img-fluid rounded"
+                (click)="image.isCollapsed = !image.isCollapsed" [attr.aria-expanded]="!image.isCollapsed">
+              <br>
+              <button type="button" class="btn btn-danger mt-3" [ngbCollapse]="image.isCollapsed"
+                (click)="removeImage(image, item)">¿Quitar?</button>
+            </app-error-handler>
+          </li>
+        </ng-container>
+      </ng-container>
+    </app-error-handler>
+  </ul>
 </div>
