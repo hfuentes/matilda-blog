@@ -30,6 +30,7 @@ export class ArchiveComponent implements OnInit {
       error: Error,
       folder: Array<{
         week: number,
+        isCollapsed: boolean,
         images: Array<{
           url: string,
           isCollapsed: boolean,
@@ -109,7 +110,7 @@ export class ArchiveComponent implements OnInit {
         const week = this.state.upload.form.value.week
         const item = this.state.images.folder.find(x => x.week == week)
         const image = { url, path, isCollapsed: true, loading: false, error: null }
-        item ? item.images.push(image) : this.state.images.folder.push({ week, images: [image] })
+        item ? item.images.push(image) : this.state.images.folder.push({ week, images: [image], isCollapsed: true })
         this.uploadCancel()
         this.state.upload.loading = false
         this.state.upload.success = true
@@ -127,8 +128,7 @@ export class ArchiveComponent implements OnInit {
   }
 
   private getImageFileName(): string {
-    //var s = this.state.upload.form.value.image[0].name.split('.')
-    return uuid.v4() + '.png'// + s[s.length - 1]
+    return uuid.v4() + '.png'
   }
 
   async getEcosFolder() {
@@ -141,21 +141,24 @@ export class ArchiveComponent implements OnInit {
         const folderRef = folders.prefixes[i];
         const images = await folderRef.listAll()
         let imageUrlList: Array<any> = []
-        for (let i = 0; i < images.items.length; i++) {
-          const imageItem = images.items[i];
-          const imageUrl = await imageItem.getDownloadURL()
-          imageUrlList.push({
-            url: imageUrl,
-            isCollapsed: true,
-            path: imageItem.fullPath
-          })
-        }
         this.state.images.folder.push({
           week: parseInt(folderRef.name),
-          images: imageUrlList
+          images: imageUrlList,
+          isCollapsed: true
         })
+        for (let i = 0; i < images.items.length; i++) {
+          const imageItem = images.items[i];
+          imageItem.getDownloadURL().then(imageUrl => {
+            imageUrlList.push({
+              url: imageUrl,
+              isCollapsed: true,
+              path: imageItem.fullPath
+            })
+          })
+        }
       }
       this.state.images.folder.sort((a, b) => (a.week < b.week) ? 1 : -1)
+      if (this.state.images.folder.length > 0) this.state.images.folder[0].isCollapsed = false
       this.state.images.loading = false
     } catch (err) {
       this.state.images.loading = false

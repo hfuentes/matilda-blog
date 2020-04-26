@@ -19,7 +19,16 @@ export class PregnancyCalculatorComponent implements OnInit {
   state: {
     loading: boolean
     error: Error
-  } = { loading: false, error: null }
+    date: {
+      show: boolean
+    }
+  } = {
+    loading: false,
+    error: null,
+    date: {
+      show: false
+    }
+  }
 
   constructor(
     private paramsService: ParamsService
@@ -38,28 +47,28 @@ export class PregnancyCalculatorComponent implements OnInit {
     })
   }
 
-  calculate() {
+  private calculate() {
     this.calcDueDate()
     this.calcDueDays()
     this.calcPercentage()
     this.calcWeeks()
   }
 
-  calcDueDate() {
+  private calcDueDate() {
     let newDate = new Date(this.lastPeriod.getTime())
     newDate.setDate(newDate.getDate() + 280)
     this.dueDate = newDate
   }
 
-  calcDueDays() {
+  private calcDueDays() {
     this.dueDays = (this.dueDate.getTime() - (new Date()).getTime()) / (1000 * 3600 * 24)
   }
 
-  calcPercentage() {
+  private calcPercentage() {
     this.percentage = (280 - this.dueDays) / 280
   }
 
-  calcWeeks() {
+  private calcWeeks() {
     this.weeks = (280 - this.dueDays) / 7
   }
 }

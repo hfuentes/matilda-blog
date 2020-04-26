@@ -4,55 +4,61 @@
     <h5 class="card-title">El archivo de Matilda</h5>
     <p class="card-text">Acá están todas las fotos de Matilda! y son muchas!</p>
   </div>
-  <div class="card-body text-center" *ngIf="!state.upload.show">
-    <button type="button" class="btn btn-link card-link" (click)="state.upload.show = true">Agregar una foto de
-      Matilda!</button>
-  </div>
-  <div class="card-body text-center" *ngIf="state.upload.show">
-    <app-error-handler [loading]="state.upload.loading" [error]="state.upload.error">
-      <form [formGroup]="state.upload.form" (ngSubmit)="onSubmitUpload()">
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Semana</label>
-          <div class="col-sm-6">
-            <input type="number" class="form-control" min="1" max="45" formControlName="week">
+  <ul class="list-group list-group-flush text-center">
+    <li class="list-group-item" *ngIf="!state.upload.show">
+      <button type="button" class="btn btn-link card-link" (click)="state.upload.show = true"><i class="icon-cherry"></i> Agregar una foto de
+        Matilda!</button>
+    </li>
+    <li class="list-group-item" *ngIf="state.upload.show">
+      <app-error-handler [loading]="state.upload.loading" [error]="state.upload.error">
+        <i class="icon-hearts"></i>
+        <p><small>Completa la semana de la eco y selecciona una foto para agregar al archivo de Matilda!</small></p>
+        <form [formGroup]="state.upload.form" (ngSubmit)="onSubmitUpload()">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Semana</label>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" min="1" max="45" formControlName="week">
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Foto</label>
-          <div class="col-sm-6">
-            <input [writeFile]="true" type="file" class="form-control-file" formControlName="image"
-              (change)="state.upload.event = $event" accept="image/jpeg, image/png" />
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Foto</label>
+            <div class="col-sm-6">
+              <input [writeFile]="true" type="file" class="form-control-file" formControlName="image"
+                (change)="state.upload.event = $event" accept="image/jpeg, image/png" />
+            </div>
           </div>
-        </div>
-        <div class="text-center">
-          <image-cropper [imageChangedEvent]="state.upload.event" [maintainAspectRatio]="false" [resizeToWidth]="512"
-            format="png" (imageCropped)="imageCropped($event)"></image-cropper>
-        </div>
-        <div class="text-center mb-3 mt-3" *ngIf="state.upload.form.controls.imageCrop.value">
-          <img [src]="state.upload.form.controls.imageCrop.value" class="img-fluid rounded" />
-        </div>
-        <button type="submit" class="btn btn-primary mr-3" [disabled]="state.upload.form.invalid">Guardar</button>
-        <button type="button" class="btn btn-secondary" (click)="uploadCancelBtn()">Cancelar</button>
-      </form>
-    </app-error-handler>
-  </div>
+          <div class="text-center">
+            <image-cropper [imageChangedEvent]="state.upload.event" [maintainAspectRatio]="false" [resizeToWidth]="512"
+              format="png" (imageCropped)="imageCropped($event)"></image-cropper>
+          </div>
+          <div class="text-center mb-3 mt-3" *ngIf="state.upload.form.controls.imageCrop.value">
+            <img [src]="state.upload.form.controls.imageCrop.value" class="img-fluid rounded" />
+          </div>
+          <button type="submit" class="btn btn-primary mr-3" [disabled]="state.upload.form.invalid">Guardar</button>
+          <button type="button" class="btn btn-secondary" (click)="uploadCancelBtn()">Cancelar</button>
+        </form>
+      </app-error-handler>
+    </li>
+  </ul>
   <ul class="list-group list-group-flush">
     <app-error-handler [loading]="state.images.loading" [error]="state.images.error">
       <ng-container *ngFor="let item of state.images.folder">
-        <li class="list-group-item text-center text-white bg-info">
-          Semana {{ item.week }}
+        <li class="list-group-item text-center text-white bg-info" (click)="item.isCollapsed = !item.isCollapsed"
+          [attr.aria-expanded]="!item.isCollapsed">
+          <i class="icon-badge-2"></i> Semana {{ item.week }} <i
+            [ngClass]="{'icon-arrow-1-circle-down': item.isCollapsed, 'icon-arrow-1-circle-up': !item.isCollapsed}"></i>
         </li>
-        <ng-container *ngFor="let image of item.images">
-          <li class="list-group-item text-center">
+        <div [ngbCollapse]="item.isCollapsed">
+          <li class="list-group-item text-center" *ngFor="let image of item.images">
             <app-error-handler [loading]="image.loading" [error]="image.error">
               <img [src]="image.url" alt="Matilda!" class="img-fluid rounded"
                 (click)="image.isCollapsed = !image.isCollapsed" [attr.aria-expanded]="!image.isCollapsed">
               <br>
-              <button type="button" class="btn btn-danger mt-3" [ngbCollapse]="image.isCollapsed"
+              <button type="button" class="btn btn-danger mt-3 btn-block" [ngbCollapse]="image.isCollapsed"
                 (click)="removeImage(image, item)">¿Quitar?</button>
             </app-error-handler>
           </li>
-        </ng-container>
+        </div>
       </ng-container>
     </app-error-handler>
   </ul>
