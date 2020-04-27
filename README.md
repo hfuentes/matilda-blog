@@ -1,27 +1,24 @@
-# MatildaBlog
+# El Blog de Matilda
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
+![](https://el-blog-de-matilda.web.app/assets/images/nacer-calc.jpg)
 
-## Development server
+El Blog de Matilda es una aplicación para mi hija Matilda que aún vive en la guatita de la mamá! Aquí se pueden ver cositas de Matilda:
+- Fecha en Matilda nacerá, calculada con una fórmula.
+- Fotos de las ecografías de Matilda, ordenadas por semana en las que fueron tomadas.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Algunas cosas técnicas
 
-## Code scaffolding
+- Tecnologías:
+`Angular 8` `Bootstrap 4` `Firebase` `GitHub CI`
+- Instalación:
+`$ npm install`
+- Desarrollo local:
+`$ ng serve`
+- Opciones local:
+`$ ng build --prod` para ver compilado en producción.
+`$ ng serve --prod` para trabajar con el compilado productivo.
+- Despliegue en producción (que es Firebase)
+`$ firebase deploy` antes se debe hacer login en firebase. Sin embargo! GitHub CI tiene automatizadas las tareas de despliegue, esto se puede ver en el archivo [firebase.yml](https://github.com/hfuentes/matilda-blog/blob/master/.github/workflows/firebase.yml ".github/workflows/firebase.yml")
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+![](https://pandao.github.io/editor.md/examples/images/4.jpg)
+Siempre Te Amo Hija!
