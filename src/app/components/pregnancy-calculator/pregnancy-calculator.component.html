@@ -28,7 +28,7 @@
             día en que llegará Matilda!</small></p>
         <p>Selecciona una nueva fecha:</p>
         <form [formGroup]="state.date.form" (ngSubmit)="onSubmitDate()">
-          <ngb-datepicker formControlName="date"></ngb-datepicker>
+          <ngb-datepicker formControlName="date" [startDate]="state.date.form.controls.date.value"></ngb-datepicker>
           <p class="mt-3"><small>La nueva fecha seleccionada es {{ getDateForm() | date: 'dd/MM/yyyy' }}</small></p>
           <button type="submit" class="btn btn-primary mr-3" [disabled]="state.date.form.invalid">Guardar</button>
           <button type="button" class="btn btn-secondary" (click)="formDateCancel()">Cancelar</button>
