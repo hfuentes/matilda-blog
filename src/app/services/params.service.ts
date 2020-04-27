@@ -11,11 +11,15 @@ export class ParamsService {
     private afStore: AngularFirestore
   ) { }
 
-  async getLastPeriod() {
+  getLastPeriod() {
     return new Promise<Date>((resolve, reject) => {
       return this.afStore.collection('params').doc('lastperiod').get().toPromise().then(doc => {
         resolve((new firebase.firestore.Timestamp(doc.data().date.seconds, doc.data().date.nanoseconds)).toDate())
       }).catch(reject)
     })
+  }
+
+  setLastPeriod(date: Date) {
+    return this.afStore.collection('params').doc('lastperiod').update({ date })
   }
 }
