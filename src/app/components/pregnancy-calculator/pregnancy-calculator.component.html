@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mb-3">
   <img src="assets/images/nacer-calc.jpg" class="image-top card-img-top img-fluid" alt="¿Cuándo llega Matilda?">
   <app-error-handler [loading]="state.loading" [error]="state.error">
     <div class="card-body">
@@ -15,8 +15,25 @@
       </li>
     </ul>
   </app-error-handler>
-  <div class="card-body text-center">
-    <button type="button" class="btn btn-link card-link" (click)="state.date.show = true"><i
-        class="icon-calendar-check"></i> Cambiar la fecha</button>
-  </div>
+  <ul class="list-group list-group-flush">
+    <app-error-handler [loading]="state.date.loading" [error]="state.date.error">
+      <li class="list-group-item text-center" *ngIf="!state.date.show">
+        <button type="button" class="btn btn-link card-link" (click)="state.date.show = true"><i
+            class="icon-calendar-check"></i> Cambiar la fecha</button>
+      </li>
+      <li class="list-group-item text-center" *ngIf="state.date.show">
+        <i class="icon-calendar-check"></i>
+        <p><small>La fecha de última regla es {{ lastPeriod | date: 'dd/MM/yyyy' }}, si se cambia se volverá a calcular
+            el
+            día en que llegará Matilda!</small></p>
+        <p>Selecciona una nueva fecha:</p>
+        <form [formGroup]="state.date.form" (ngSubmit)="onSubmitDate()">
+          <ngb-datepicker formControlName="date"></ngb-datepicker>
+          <p class="mt-3"><small>La nueva fecha seleccionada es {{ getDateForm() | date: 'dd/MM/yyyy' }}</small></p>
+          <button type="submit" class="btn btn-primary mr-3" [disabled]="state.date.form.invalid">Guardar</button>
+          <button type="button" class="btn btn-secondary" (click)="formDateCancel()">Cancelar</button>
+        </form>
+      </li>
+    </app-error-handler>
+  </ul>
 </div>
