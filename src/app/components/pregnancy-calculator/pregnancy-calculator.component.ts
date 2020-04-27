@@ -4,12 +4,21 @@ import { Error } from '../error-handler/error-handler.component';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ConfirmationDialogService } from 'src/app/services/confirmation-dialog.service';
+import { I18n, CustomDatepickerI18n } from 'src/app/app.component';
+import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-pregnancy-calculator',
   templateUrl: './pregnancy-calculator.component.html',
   styleUrls: ['./pregnancy-calculator.component.scss'],
-  providers: [DatePipe]
+  providers: [
+    DatePipe,
+    I18n,
+    {
+      provide: NgbDatepickerI18n,
+      useClass: CustomDatepickerI18n
+    }
+  ]
 })
 export class PregnancyCalculatorComponent implements OnInit {
 
