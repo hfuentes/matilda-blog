@@ -20,7 +20,7 @@ import { ErrorHandlerModule } from './components/error-handler/error-handler.mod
 import { PregnancyCalculatorComponent } from './components/pregnancy-calculator/pregnancy-calculator.component'
 import { ArchiveComponent } from './components/archive/archive.component'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import {  RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component'
 import { ConfirmationDialogService } from './services/confirmation-dialog.service'
 import { ImageCropperModule } from 'ngx-image-cropper'

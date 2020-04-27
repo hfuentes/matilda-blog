@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { NgbDateStruct, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 
 const I18N_VALUES = {
@@ -8,11 +8,14 @@ const I18N_VALUES = {
   }
 }
 
+// Define a service holding the language. You probably already have one if your app is i18ned. Or you could also
+// use the Angular LOCALE_ID value
 @Injectable()
 export class I18n {
   language = 'es';
 }
 
+// Define custom service providing the months and weekdays translations
 @Injectable()
 export class CustomDatepickerI18n extends NgbDatepickerI18n {
 
@@ -35,12 +38,4 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
   getDayAriaLabel(date: NgbDateStruct): string {
     return `${date.day}-${date.month}-${date.year}`;
   }
-}
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
-})
-export class AppComponent {
-  title = 'El Blog de Matilda';
 }
